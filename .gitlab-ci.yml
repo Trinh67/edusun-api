@@ -1,0 +1,53 @@
+include:
+  - project: 'workloads/ci-template'
+    ref: master
+    file: '/gitlab-ci.v4.1.yaml'
+
+variables:
+  IMAGE_REPOSITORY: asia.gcr.io/teko-registry/o2o/multilan-service
+  WORKLOAD_DEV_TEKO: 'workloads/develop'
+
+######
+# Stage: pretest
+######
+test:unitest:
+  stage: pretest
+  image:
+    name: python:3.9.16
+  services:
+    - name: mysql:5.7
+      command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+  variables:
+    MYSQL_DATABASE: multilan_dev_test
+    MYSQL_ROOT_PASSWORD: root
+    SQLALCHEMY_DATABASE_URI: mysql+pymysql://root:root@mysql/multilan_dev_test?charset=utf8mb4
+    SQLALCHEMY_DATABASE_URI_TEST: mysql+pymysql://root:root@mysql/multilan_dev_test?charset=utf8mb4
+  before_script:
+    - pip install --upgrade pip
+    - pip install --cache-dir=.pip -r requirements.txt
+  script:
+    - echo "${TESTING}" > .env
+    - py.test --cov=app
+  coverage: '/^TOTAL\s+\d+\s+\d+\s+(\d+\%)\s*$/'
+  cache:
+    key: pip-cache
+    paths: [ .pip ]
+test:validate-mr:
+  rules:
+    - when: never
+
+######
+# Stage: deploy
+######
+
+# Deploy to develop env
+deploy:develop:
+  rules:
+    - when: never
+
+deploy:develop-teko:
+  extends: deploy:develop
+  variables:
+    WORKLOAD: $WORKLOAD_DEV_TEKO
+  rules:
+    - if: $CI_COMMIT_REF_NAME == "master"
