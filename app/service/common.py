@@ -6,7 +6,6 @@ import logging
 from io import BytesIO
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
 
@@ -53,7 +52,6 @@ class CommonService:
 
             # Change column name and convert data
             df = df.rename(columns={})
-            df = df.replace({np.nan: ''})
             code_records = df.to_dict('records')
             # Todo: add data
 
