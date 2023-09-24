@@ -19,6 +19,7 @@ opentelemetry-instrumentation-requests==0.26b1
 opentelemetry-instrumentation-sqlalchemy==0.26b1
 opentelemetry-sdk==1.7.1
 opentelemetry-api==1.7.1
+numpy==1.24.2
 pandas==2.0.0
 python_multipart==0.0.6
 openpyxl==3.0.7
