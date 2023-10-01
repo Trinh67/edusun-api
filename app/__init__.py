@@ -1,15 +1,17 @@
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError, HTTPException
 from pydantic import ValidationError
+from starlette.authentication import AuthenticationError
 from starlette.middleware import Middleware
 
 from app.api import api_router
 from setting import setting
+from .fastapi.middlewares import AuthenticationMiddleware, AuthBackend, ResponseLogMiddleware
 from .helper.exception_handler import fastapi_error_handler, request_validation_exception_handler, \
     validation_exception_handler, http_exception_handler, CommonException, base_exception_handler
 from .helper.db import db_engine
 from starlette_context.middleware import ContextMiddleware
-from starlette.requests import Request
+from starlette.requests import Request, HTTPConnection
 
 from .helper.prometheus_middleware import PrometheusMiddleware, handle_metrics
 from opentelemetry.sdk.resources import Resource, SERVICE_NAME
@@ -28,10 +30,20 @@ class GetLanguageMiddleware(ContextMiddleware):
         return {"lang": request.headers.get('Accept-Language')}
 
 
+def on_auth_error(conn: HTTPConnection, exc: AuthenticationError):
+    raise HTTPException(status_code=401, detail="Unauthorized")
+
+
 middleware = [
     Middleware(
-        GetLanguageMiddleware
-    )
+        GetLanguageMiddleware,
+    ),
+    Middleware(
+        AuthenticationMiddleware,
+        backend=AuthBackend(),
+        on_error=on_auth_error,
+    ),
+    Middleware(ResponseLogMiddleware),
 ]
 
 

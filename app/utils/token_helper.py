@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 import jwt
 
-from app import CommonException
+from app.helper.custom_exception import CommonException
 from setting import setting
 
 

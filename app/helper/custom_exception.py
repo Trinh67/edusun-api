@@ -72,6 +72,13 @@ class RequiredFile(CommonException):
                          message="RequiredFile")
 
 
+class ExistedException(CommonException):
+    def __init__(self, code: int = None, message: str = None):
+        self.http_code = 409
+        self.code = code if code else self.http_code
+        self.message = message
+
+
 class NotSupportFileType(CommonException):
     def __init__(self):
         super().__init__(http_code=400, code=415,

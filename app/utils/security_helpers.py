@@ -1,13 +1,10 @@
-import base64
-from datetime import datetime, timedelta
-from typing import Any, Union
 from cryptography.fernet import Fernet
 from passlib.context import CryptContext
 
-from core.config import config
+from setting import setting
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-fernet = Fernet(config.ENCRYPT_KEY.encode())
+fernet = Fernet(setting.ENCRYPT_KEY.encode())
 
 # ALGORITHM = "HS256"
 

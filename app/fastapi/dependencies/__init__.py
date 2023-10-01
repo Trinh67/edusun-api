@@ -3,7 +3,7 @@ from .permission import (
     PermissionDependency,
     IsAuthenticated,
     IsAdmin,
-    IsAdminOrTeacher,
+    IsSuperAdmin,
     AllowAll,
 )
 
@@ -12,6 +12,6 @@ __all__ = [
     "PermissionDependency",
     "IsAuthenticated",
     "IsAdmin",
-    "IsAdminOrTeacher",
+    "IsSuperAdmin",
     "AllowAll",
 ]

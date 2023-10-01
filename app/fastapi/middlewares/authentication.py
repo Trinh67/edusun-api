@@ -6,8 +6,8 @@ from starlette.middleware.authentication import (
 )
 from starlette.requests import HTTPConnection
 
-from app.services.user import UserService
 from ..schemas import CurrentUser
+from ...service.user import UserService
 
 
 class AuthBackend(AuthenticationBackend):
@@ -20,7 +20,7 @@ class AuthBackend(AuthenticationBackend):
         if not access_token:
             return False, current_user
 
-        user_id = await UserService().get_user_id_by_token(access_token)
+        user_id = UserService().get_user_id_by_token(access_token)
 
         # print("user_id", user_id)
 

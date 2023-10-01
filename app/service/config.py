@@ -39,8 +39,7 @@ class ConfigService:
             cls, db, req: CreateSelectionValueRequestSchema
     ) -> CreateSelectionValueResponseSchema:
         # Check duplicate value in same type
-        selection_value = Config.first(db, Config.type == req.type.value, Config.name == req.name,
-                                       Config.deleted_at.is_(None))
+        selection_value = Config.first(db, Config.type == req.type.value, Config.name == req.name)
 
         if selection_value:
             raise ExistedObject("ConfigName")
@@ -53,9 +52,9 @@ class ConfigService:
 
     @classmethod
     def delete_config(cls, db: Session, config_id: int):
-        config = Config.first(db, Config.id == config_id, Config.deleted_at.is_(None))
+        config = Config.first(db, Config.id == config_id)
         if not config:
-            raise ObjectNotFound(ObjectNotFoundType.CONFIG.value)
+            raise ObjectNotFound(obj=ObjectNotFoundType.CONFIG.value)
 
         config.deleted_at = datetime.now()
         db.flush()
