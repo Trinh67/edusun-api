@@ -12,7 +12,7 @@ class Language(str, Enum):
     EN = 'en'
 
 
-class ObjectNotFoundType(Enum):
+class ObjectNotFoundType(str, Enum):
     USER = 'User'
     CUSTOMER = 'Customer'
     CONFIG = 'Config'
@@ -41,4 +41,28 @@ class UserStatus(str, Enums):
 class UserRole(str, Enums):
     SUPER_ADMIN = 'super'
     ADMIN = 'admin'
-    NONE = 'none'
+
+
+class Gender(str, Enums):
+    MALE = 'male'
+    FEMALE = 'female'
+    OTHER = 'other'
+
+
+class PostStatus(str, Enums):
+    DRAFT = 'draft'
+    PUBLISH = 'publish'
+    ARCHIVE = 'archive'
+    DELETE = 'delete'
+
+
+class PostType(str, Enums):
+    STUDY_ABROAD = 'study_abroad'
+    JOB = 'job'
+    SETTLED = 'settled'
+    TRAVEL_VISA = 'travel_visa'
+
+
+class Currency(str, Enums):
+    VND = 'VND'
+    USD = 'USD'

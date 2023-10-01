@@ -17,6 +17,12 @@ class Setting(BaseSettings):
     PROJECT_TITLE: str = 'EduSun Service'
     SQLALCHEMY_DATABASE_URI: str = os.getenv('SQLALCHEMY_DATABASE_URI')
 
+    # Login
+    JWT_SECRET_KEY: str = os.getenv('JWT_SECRET_KEY')
+    JWT_ALGORITHM: str = os.getenv('JWT_ALGORITHM', 'HS256')
+    ENCRYPT_KEY: str = os.getenv('ENCRYPT_KEY', 'tLGMDqFj1P4aSFK6WuRdS8y94DobW26NgqdXW2i6Ymw=')
+    ACCESS_TOKEN_EXPIRY_PERIOD: int = os.getenv('ACCESS_TOKEN_EXPIRY_PERIOD', 3600 * 24 * 7) # 7 days
+
     # Jaeger
     JAEGER_ENABLED: int = os.getenv('JAEGER_ENABLED', 0)
     JAEGER_AGENT_HOST: str = os.getenv('JAEGER_HOST', "localhost")

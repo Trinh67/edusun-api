@@ -52,10 +52,31 @@ class CommonException(Exception):
         yield from (self.code, self.message)
 
 
+class UnauthorizedException(CommonException):
+    def __init__(self, code: int = None, message: str = None):
+        self.http_code = 401
+        self.code = code if code else self.http_code
+        self.message = message
+
+
+class ForbiddenException(CommonException):
+    def __init__(self, code: int = None, message: str = None):
+        self.http_code = 403
+        self.code = code if code else self.http_code
+        self.message = message
+
+
 class RequiredFile(CommonException):
     def __init__(self):
         super().__init__(http_code=400, code=402,
                          message="RequiredFile")
+
+
+class ExistedException(CommonException):
+    def __init__(self, code: int = None, message: str = None):
+        self.http_code = 409
+        self.code = code if code else self.http_code
+        self.message = message
 
 
 class NotSupportFileType(CommonException):
