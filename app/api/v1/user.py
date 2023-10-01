@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.dto.core import ExceptionResponseSchema
 from app.dto.core.user import LoginResponseSchema, LoginRequestSchema, CreateUserRequestSchema, \
     GetUserDetailResponseSchema, GetListUsersResponse, GetListUsersRequest, UpdateUserRequestSchema, \
-    UpdateUserResponseSchema, CreateUserResponseSchema
+    UpdateUserResponseSchema, CreateUserResponseSchema, DeleteUserResponseSchema
 from app.fastapi.dependencies import PermissionDependency, IsAuthenticated, IsAdmin
 from app.helper.base_response import DataResponse, PagingDataResponse
 from app.helper.db import db_session
@@ -96,4 +96,18 @@ def update_user(
         request: UpdateUserRequestSchema,
 ):
     user = UserService().update_user(db=db, user_id=user_id, req=request)
+    return DataResponse().success_response(data=user)
+
+
+@router.delete(
+    "/{user_id}",
+    response_model=DataResponse[DeleteUserResponseSchema],
+    responses={"400": {"model": ExceptionResponseSchema}},
+    dependencies=[Depends(PermissionDependency([IsAdmin]))],
+)
+def delete_user(
+        db: Session = Depends(db_session), *,
+        user_id: int,
+):
+    user = UserService().delete_user(db=db, user_id=user_id)
     return DataResponse().success_response(data=user)

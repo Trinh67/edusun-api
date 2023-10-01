@@ -183,3 +183,14 @@ class UserService:
         db.flush()
         db.commit()
         return UpdateUserResponseSchema(id=user.id)
+
+    @classmethod
+    def delete_user(cls, db: Session, user_id: int):
+        user = User.first(db, User.id == user_id)
+        if not user:
+            raise ObjectNotFound(obj=ObjectNotFoundType.USER.value)
+
+        user.deleted_at = datetime.now()
+        db.flush()
+        db.commit()
+        return None
