@@ -72,7 +72,7 @@ class UserService:
     @classmethod
     def login(cls, db: Session, req: LoginRequestSchema, user_agent: str, ip: str) -> LoginResponseSchema:
         # Check user exist
-        user = User.first(db, or_(User.email == req.phone_or_email, User.phone == req.phone_or_email),
+        user = User.first(db, or_(User.email == req.phone_or_email, User.phone_number == req.phone_or_email),
                           User.status == UserStatus.ACTIVE.value)
         if not user:
             # raise UserNotFoundException
@@ -112,9 +112,9 @@ class UserService:
     def create_user(
             cls, db: Session, req: CreateUserRequestSchema
     ) -> CreateUserResponseSchema:
-        user = User.first(db, or_(User.email == req.email, User.phone == req.phone))
+        user = User.first(db, or_(User.email == req.email, User.phone_number == req.phone_number))
         if user:
-            raise ExistedException(message="Email or phone already existed")
+            raise ExistedException(message="Email or phone_number already existed")
 
         new_user = User()
         for key, value in req.dict().items():
@@ -153,7 +153,7 @@ class UserService:
 
         if req_query.search:
             query = query.filter(or_(User.email.ilike(f'%{req_query.search}%'),
-                                     User.phone.ilike(f'%{req_query.search}%'),
+                                     User.phone_number.ilike(f'%{req_query.search}%'),
                                      User.fullname.ilike(f'%{req_query.search}%')))
 
         total_items = query.count()

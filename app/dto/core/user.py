@@ -23,7 +23,7 @@ class UserDTO(CamelBaseModel):
         orm_mode = True
 
     email: Optional[str]
-    phone: Optional[str]
+    phone_number: Optional[str]
     fullname: Optional[str]
     avatar_url: Optional[str]
     status: Optional[UserStatus]
@@ -63,19 +63,19 @@ class GetUserDetailResponseSchema(UserDTO):
 
 class CreateUserRequestSchema(CamelBaseModel):
     email: str
-    phone: str
+    phone_number: str
     password: str = Field(..., min_length=6, max_length=32)
     fullname: str
 
-    @validator('phone')
-    def validate_phone(cls, value):
+    @validator('phone_number')
+    def validate_phone_number(cls, value):
         try:
             is_valid = is_phone_number_valid(value)
             if not is_valid:
-                raise InvalidFieldFormat(field_name='phone')
+                raise InvalidFieldFormat(field_name='phone_number')
             return value
         except Exception as e:
-            raise InvalidFieldFormat(field_name='phone')
+            raise InvalidFieldFormat(field_name='phone_number')
 
     @validator('email')
     def validate_email(cls, value):
@@ -95,15 +95,15 @@ class CreateUserResponseSchema(CamelBaseModel):
 class UpdateUserRequestSchema(UserDTO, UpdateModel):
     password: Optional[str] = Field(None, min_length=6, max_length=32)
 
-    @validator('phone')
-    def validate_phone(cls, value):
+    @validator('phone_number')
+    def validate_phone_number(cls, value):
         try:
             is_valid = is_phone_number_valid(value)
             if not is_valid:
-                raise InvalidFieldFormat(field_name='phone')
+                raise InvalidFieldFormat(field_name='phone_number')
             return value
         except Exception as e:
-            raise InvalidFieldFormat(field_name='phone')
+            raise InvalidFieldFormat(field_name='phone_number')
 
     @validator('email')
     def validate_email(cls, value):

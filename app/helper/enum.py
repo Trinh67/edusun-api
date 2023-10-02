@@ -27,10 +27,8 @@ class ConfigValueType(str, Enum):
 
 
 class UserType(str, Enums):
-    STUDENT = 'student'
     COLLABORATOR = 'collaborator'
     STAFF = 'staff'
-    CANDIDATE = 'candidate'
 
 
 class UserStatus(str, Enums):
@@ -66,3 +64,13 @@ class PostType(str, Enums):
 class Currency(str, Enums):
     VND = 'VND'
     USD = 'USD'
+
+
+class CandidateStatus(str, Enums):
+    WAITTING = 'waitting'
+    PROFILE_REVIEW = 'profile_review'
+    INTERVIEW = 'interview'
+    ADMISSION = 'admission'
+    TRAINING = 'training'
+    WORKING = 'working'
+

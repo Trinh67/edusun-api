@@ -9,7 +9,7 @@ class User(BareBaseModel, SoftModifyMixin):
     __tablename__ = "user"
 
     email = Column(Unicode(255), nullable=False, unique=True)
-    phone = Column(Unicode(255), nullable=False, unique=True)
+    phone_number = Column(Unicode(255), nullable=False, unique=True)
     password = Column(Unicode(255), nullable=False)
     password_hash = Column(Unicode(255), nullable=True)
     password_reset = Column(Unicode(255), nullable=True)
