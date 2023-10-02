@@ -8,8 +8,7 @@ from app.helper.pagination import PaginationRequest, PaginationResponse
 
 
 class LoginRequestSchema(CamelBaseModel):
-    email: Optional[str]
-    phone: Optional[str]
+    phone_or_email: str
     password: str
 
 

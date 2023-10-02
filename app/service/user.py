@@ -71,13 +71,9 @@ class UserService:
 
     @classmethod
     def login(cls, db: Session, req: LoginRequestSchema, user_agent: str, ip: str) -> LoginResponseSchema:
-        if req.email:
-            user = User.first(db, User.email == req.email, User.status == UserStatus.ACTIVE.value)
-        elif req.phone:
-            user = User.first(db, User.phone == req.phone, User.status == UserStatus.ACTIVE.value)
-        else:
-            raise FieldIsRequired("email or phone")
-
+        # Check user exist
+        user = User.first(db, or_(User.email == req.phone_or_email, User.phone == req.phone_or_email),
+                          User.status == UserStatus.ACTIVE.value)
         if not user:
             # raise UserNotFoundException
             raise UnauthorizedException(message="Wrong user credential")
