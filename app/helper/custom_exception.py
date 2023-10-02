@@ -135,13 +135,13 @@ class InvalidField(CommonException):
 class InvalidFieldFormat(CommonException):
     def __init__(self, field_name: str):
         super().__init__(http_code=400, code=407,
-                         message="InvalidFieldFormat")
+                         message=f"InvalidFieldFormat {field_name}")
 
 
 class InvalidMinLength(CommonException):
     def __init__(self, field_name: str, limit: int):
         super().__init__(http_code=400, code=412,
-                         message="InvalidMinLength")
+                         message=f"InvalidMinLength {field_name} limit {limit}")
 
 
 class InvalidMaxLength(CommonException):

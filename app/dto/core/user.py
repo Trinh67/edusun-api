@@ -1,10 +1,12 @@
 from typing import List, Optional
 
-from pydantic import Field
+from pydantic import Field, validator
 from app.dto.base import CamelBaseModel
 from app.dto.core import UpdateModel
+from app.helper.custom_exception import InvalidFieldFormat
 from app.helper.enum import UserStatus, UserType, UserRole, Gender
 from app.helper.pagination import PaginationRequest, PaginationResponse
+from app.helper.utils import is_phone_number_valid, is_valid_email
 
 
 class LoginRequestSchema(CamelBaseModel):
@@ -65,6 +67,26 @@ class CreateUserRequestSchema(CamelBaseModel):
     password: str = Field(..., min_length=6, max_length=32)
     fullname: str
 
+    @validator('phone')
+    def validate_phone(cls, value):
+        try:
+            is_valid = is_phone_number_valid(value)
+            if not is_valid:
+                raise InvalidFieldFormat(field_name='phone')
+            return value
+        except Exception as e:
+            raise InvalidFieldFormat(field_name='phone')
+
+    @validator('email')
+    def validate_email(cls, value):
+        try:
+            is_valid = is_valid_email(value)
+            if not is_valid:
+                raise InvalidFieldFormat(field_name='email')
+            return value
+        except Exception as e:
+            raise InvalidFieldFormat(field_name='email')
+
 
 class CreateUserResponseSchema(CamelBaseModel):
     id: int
@@ -72,6 +94,26 @@ class CreateUserResponseSchema(CamelBaseModel):
 
 class UpdateUserRequestSchema(UserDTO, UpdateModel):
     password: Optional[str] = Field(None, min_length=6, max_length=32)
+
+    @validator('phone')
+    def validate_phone(cls, value):
+        try:
+            is_valid = is_phone_number_valid(value)
+            if not is_valid:
+                raise InvalidFieldFormat(field_name='phone')
+            return value
+        except Exception as e:
+            raise InvalidFieldFormat(field_name='phone')
+
+    @validator('email')
+    def validate_email(cls, value):
+        try:
+            is_valid = is_valid_email(value)
+            if not is_valid:
+                raise InvalidFieldFormat(field_name='email')
+            return value
+        except Exception as e:
+            raise InvalidFieldFormat(field_name='email')
 
 
 class UpdateUserResponseSchema(CamelBaseModel):
