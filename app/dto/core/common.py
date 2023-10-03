@@ -19,7 +19,7 @@ class UploadFileRequest(UploadFileSource):
             raise RequiredFile()
         path = Path(v.filename)
         if not path.name or path.suffix.lower() not in ['.csv', '.xls', '.xlsx', '.pdf', '.txt', '.docs', '.doc',
-                                                        '.docx', '.pptx', '.jpg', '.png', 'jpeg']:
+                                                        '.docx', '.pptx', '.jpg', '.png', '.jpeg']:
             raise NotSupportFileType()
 
         return v

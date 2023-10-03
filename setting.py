@@ -32,6 +32,9 @@ class Setting(BaseSettings):
     DEFAULT_MAX_UPLOAD_IMPORT_SIZE: int = os.getenv('DEFAULT_MAX_UPLOAD_IMPORT_SIZE', 10)
     DATA_STORAGE: str = os.getenv('DATA_STORAGE', '')
 
+    BASE_FILE_URL: str = os.getenv('BASE_FILE_URL', 'https://firebasestorage.googleapis.com/v0/b/worduptest-e5ac4.appspot.com/o')
+    DEFAULT_MAX_UPLOAD_SIZE: int = 10
+
     @property
     def is_testing(self):
         return self.ENV == 'test'

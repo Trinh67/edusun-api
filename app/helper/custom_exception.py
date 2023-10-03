@@ -66,6 +66,13 @@ class ForbiddenException(CommonException):
         self.message = message
 
 
+class ValidateException(CommonException):
+    def __init__(self, code: int = None, message: str = None):
+        self.http_code = 400
+        self.code = code if code else self.http_code
+        self.message = message
+
+
 class RequiredFile(CommonException):
     def __init__(self):
         super().__init__(http_code=400, code=402,

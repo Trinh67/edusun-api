@@ -66,6 +66,11 @@ class Currency(str, Enums):
     USD = 'USD'
 
 
+class UploadFileType(str, Enums):
+    IMAGE = 'image'
+    ATTACHMENT = 'attachment'
+
+
 class CandidateStatus(str, Enums):
     WAITTING = 'waitting'
     PROFILE_REVIEW = 'profile_review'
