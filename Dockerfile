@@ -5,6 +5,7 @@ RUN apt-get -y update && apt-get -y --no-install-recommends install git default-
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 COPY requirements.txt .
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 
