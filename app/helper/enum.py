@@ -16,6 +16,7 @@ class ObjectNotFoundType(str, Enum):
     USER = 'User'
     CUSTOMER = 'Customer'
     CONFIG = 'Config'
+    JOB_POST = 'Job_Post'
 
 
 class ImportFileType(str, Enum):
