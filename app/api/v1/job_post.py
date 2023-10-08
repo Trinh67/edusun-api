@@ -38,7 +38,7 @@ def get_job_post_by_id(
         request: Request,
         job_post_id: int,
 ):
-    job_post = JobPostService().get_job_post_info(db=db, job_post_id=job_post_id, user_id=request.user.id)
+    job_post = JobPostService().get_job_post_by_id(db=db, job_post_id=job_post_id, user_id=request.user.id)
     return DataResponse().success_response(data=job_post)
 
 

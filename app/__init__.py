@@ -23,6 +23,7 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.instrumentation.requests import RequestsInstrumentor
 from opentelemetry.instrumentation.sqlalchemy import SQLAlchemyInstrumentor
 from opentelemetry.sdk.trace.sampling import TraceIdRatioBased
+from fastapi.middleware.cors import CORSMiddleware
 
 
 class GetLanguageMiddleware(ContextMiddleware):
@@ -75,14 +76,13 @@ def create_app() -> FastAPI:
         FastAPIInstrumentor.instrument_app(app, excluded_urls='health/*,metrics')
 
     # Set all CORS enabled origins
-    # if setting.BACKEND_CORS_ORIGINS:
-    #     app.add_middleware(
-    #         CORSMiddleware,
-    #         allow_origins=[str(origin) for origin in setting.BACKEND_CORS_ORIGINS],
-    #         allow_credentials=True,
-    #         allow_methods=["*"],
-    #         allow_headers=["*"],
-    #     )
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
     # Add exception
     app.add_exception_handler(CommonException, base_exception_handler)
