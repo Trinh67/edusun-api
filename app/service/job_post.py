@@ -65,6 +65,9 @@ class JobPostService:
         for key, value in req.dict().items():
             setattr(job_post, key, value)
 
+        job_post.updated_by = user_id
+        job_post.updated_at = datetime.now()
+
         db.flush()
         db.commit()
         return UpdateJobPostResponseSchema(id=job_post.id)
@@ -76,6 +79,7 @@ class JobPostService:
             raise ObjectNotFound(obj=ObjectNotFoundType.JOB_POST.value)
 
         job_post.deleted_at = datetime.now()
+        job_post.deleted_by = user_id
         db.flush()
         db.commit()
         return None

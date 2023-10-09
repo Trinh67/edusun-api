@@ -111,7 +111,7 @@ class InvalidFileFormat(CommonException):
 
 
 class ObjectNotFound(CommonException):
-    def __init__(self, obj: ObjectNotFoundType):
+    def __init__(self, obj: str):
         super().__init__(http_code=400, code=404,
                          message=f"Object {obj} Not Found")
 

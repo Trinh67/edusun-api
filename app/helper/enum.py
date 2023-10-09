@@ -17,6 +17,7 @@ class ObjectNotFoundType(str, Enum):
     CUSTOMER = 'Customer'
     CONFIG = 'Config'
     JOB_POST = 'Job_Post'
+    CANDIDATE = 'Candidate'
 
 
 class ImportFileType(str, Enum):
@@ -80,3 +81,10 @@ class CandidateStatus(str, Enums):
     TRAINING = 'training'
     WORKING = 'working'
 
+
+class GraduationType(str, Enums):
+    THCS = 'thcs'
+    THPT = 'thpt'
+    TRUNG_CAP = 'trung_cap'
+    CAO_DANG = 'cao_dang'
+    DAI_HOC = 'dai_hoc'
