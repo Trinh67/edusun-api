@@ -17,6 +17,7 @@ router = APIRouter()
     "",
     response_model=DataResponse[CreateJobPostResponseSchema],
     responses={"400": {"model": ExceptionResponseSchema}},
+    dependencies=[Depends(PermissionDependency([IsAdmin]))]
 )
 def create_job_post(
         db: Session = Depends(db_session), *,

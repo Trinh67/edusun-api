@@ -17,6 +17,7 @@ router = APIRouter()
     "",
     response_model=DataResponse[CreateCandidateResponseSchema],
     responses={"400": {"model": ExceptionResponseSchema}},
+    dependencies=[Depends(PermissionDependency([IsAuthenticated]))]
 )
 def create_candidate(
         db: Session = Depends(db_session), *,
